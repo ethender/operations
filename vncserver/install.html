@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<link rel="pingback" href="https://www.linuxtechi.com/xmlrpc.php">
+<title>Install and Configure VNC Server in CentOS 7 and RHEL 7</title>
+<script type="7fd558221e3ffe08bfb07328-text/javascript">document.documentElement.className = document.documentElement.className.replace("no-js","js");</script>
+
+<link rel="author" href="https://plus.google.com/u/0/106374064320328901397" />
+<meta name="description" content="Installation and Configuration steps of VNC server in CentOS 7 &amp; RHEL 7. VNC Server allows the remote Desktop sharing using remote VNC clients like VNC viewer" />
+<meta name="keywords" content="install vnc server in centos 7 &amp; rhel 7,configure vnc in centos 7,access linux desktop using vnc,install vnc server in centos 7 &amp; rhel 7,vnc server centos 7" />
+<link rel="canonical" href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/" />
+<script type="7fd558221e3ffe08bfb07328-text/javascript">
+				window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+				ga('create', 'UA-48714625-1', 'auto');
+				// Plugins
+				
+				ga('send', 'pageview');
+			</script>
+<script async src="https://www.google-analytics.com/analytics.js" type="7fd558221e3ffe08bfb07328-text/javascript"></script>
+
+<link rel="amphtml" href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/amp/" /><link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Linuxtechi &raquo; Feed" href="https://www.linuxtechi.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Linuxtechi &raquo; Comments Feed" href="https://www.linuxtechi.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Linuxtechi &raquo; Install and Configure VNC Server in CentOS 7 and RHEL 7 Comments Feed" href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/feed/" />
+<script type="7fd558221e3ffe08bfb07328-text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.linuxtechi.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.8"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='cptch_stylesheet-css' href='https://www.linuxtechi.com/wp-content/plugins/captcha/css/front_end_style.css?ver=4.4.5' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css' href='https://www.linuxtechi.com/wp-includes/css/dashicons.min.css?ver=4.9.8' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_desktop_style-css' href='https://www.linuxtechi.com/wp-content/plugins/captcha/css/desktop_style.css?ver=4.4.5' type='text/css' media='all' />
+<link rel='stylesheet' id='responsive-lightbox-swipebox-css' href='https://www.linuxtechi.com/wp-content/plugins/responsive-lightbox/assets/swipebox/css/swipebox.min.css?ver=2.0.5' type='text/css' media='all' />
+<link rel='stylesheet' id='scfp-form-repeater-css-css' href='https://www.linuxtechi.com/wp-content/plugins/wcp-contact-form/agp-core/assets/repeater/css/style.css?ver=4.9.8' type='text/css' media='all' />
+<link rel='stylesheet' id='scfp-css-css' href='https://www.linuxtechi.com/wp-content/plugins/wcp-contact-form/assets/css/style.css?ver=4.9.8' type='text/css' media='all' />
+<link rel='stylesheet' id='hueman-main-style-css' href='https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/css/main.min.css?ver=3.4.0' type='text/css' media='all' />
+<style id='hueman-main-style-inline-css' type='text/css'>
+body { font-family:Georgia, serif;font-size:0.94rem }@media only screen and (min-width: 720px) {
+        .nav > li { font-size:0.94rem; }
+      }.sidebar .widget { padding-left: 20px; padding-right: 20px; padding-top: 20px; }::selection { background-color: #155c8e; }
+::-moz-selection { background-color: #155c8e; }a,.themeform label .required,#flexslider-featured .flex-direction-nav .flex-next:hover,#flexslider-featured .flex-direction-nav .flex-prev:hover,.post-hover:hover .post-title a,.post-title a:hover,.sidebar.s1 .post-nav li a:hover i,.content .post-nav li a:hover i,.post-related a:hover,.sidebar.s1 .widget_rss ul li a,#footer .widget_rss ul li a,.sidebar.s1 .widget_calendar a,#footer .widget_calendar a,.sidebar.s1 .alx-tab .tab-item-category a,.sidebar.s1 .alx-posts .post-item-category a,.sidebar.s1 .alx-tab li:hover .tab-item-title a,.sidebar.s1 .alx-tab li:hover .tab-item-comment a,.sidebar.s1 .alx-posts li:hover .post-item-title a,#footer .alx-tab .tab-item-category a,#footer .alx-posts .post-item-category a,#footer .alx-tab li:hover .tab-item-title a,#footer .alx-tab li:hover .tab-item-comment a,#footer .alx-posts li:hover .post-item-title a,.comment-tabs li.active a,.comment-awaiting-moderation,.child-menu a:hover,.child-menu .current_page_item > a,.wp-pagenavi a{ color: #155c8e; }.themeform input[type="submit"],.themeform button[type="submit"],.sidebar.s1 .sidebar-top,.sidebar.s1 .sidebar-toggle,#flexslider-featured .flex-control-nav li a.flex-active,.post-tags a:hover,.sidebar.s1 .widget_calendar caption,#footer .widget_calendar caption,.author-bio .bio-avatar:after,.commentlist li.bypostauthor > .comment-body:after,.commentlist li.comment-author-admin > .comment-body:after{ background-color: #155c8e; }.post-format .format-container { border-color: #155c8e; }.sidebar.s1 .alx-tabs-nav li.active a,#footer .alx-tabs-nav li.active a,.comment-tabs li.active a,.wp-pagenavi a:hover,.wp-pagenavi a:active,.wp-pagenavi span.current{ border-bottom-color: #155c8e!important; }.sidebar.s2 .post-nav li a:hover i,
+.sidebar.s2 .widget_rss ul li a,
+.sidebar.s2 .widget_calendar a,
+.sidebar.s2 .alx-tab .tab-item-category a,
+.sidebar.s2 .alx-posts .post-item-category a,
+.sidebar.s2 .alx-tab li:hover .tab-item-title a,
+.sidebar.s2 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s2 .alx-posts li:hover .post-item-title a { color: #3e92cc; }
+.sidebar.s2 .sidebar-top,.sidebar.s2 .sidebar-toggle,.post-comments,.jp-play-bar,.jp-volume-bar-value,.sidebar.s2 .widget_calendar caption{ background-color: #3e92cc; }.sidebar.s2 .alx-tabs-nav li.active a { border-bottom-color: #3e92cc; }
+.post-comments span:before { border-right-color: #3e92cc; }
+      .search-expand,
+              #nav-topbar.nav-container { background-color: #000000}@media only screen and (min-width: 720px) {
+                #nav-topbar .nav ul { background-color: #000000; }
+              }.is-scrolled #header .nav-container.desktop-sticky,
+              .is-scrolled #header .search-expand { background-color: #000000; background-color: rgba(0,0,0,0.90) }.is-scrolled .topbar-transparent #nav-topbar.desktop-sticky .nav ul { background-color: #000000; background-color: rgba(0,0,0,0.95) }#header { background-color: #ffffff; }
+@media only screen and (min-width: 720px) {
+  #nav-header .nav ul { background-color: #ffffff; }
+}
+        #header #nav-mobile { background-color: #e8e8e8; }.is-scrolled #header #nav-mobile { background-color: #e8e8e8; background-color: rgba(232,232,232,0.90) }#nav-header.nav-container, #main-header-search .search-expand { background-color: #33363b; }
+@media only screen and (min-width: 720px) {
+  #nav-header .nav ul { background-color: #33363b; }
+}
+        .site-title a img { max-height: 80px; }img { -webkit-border-radius: 5px; border-radius: 5px; }body { background-color: #eaeaea; }
+</style>
+<link rel='stylesheet' id='hueman-font-awesome-css' href='https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/css/font-awesome.min.css?ver=3.4.0' type='text/css' media='all' />
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/responsive-lightbox/assets/swipebox/js/jquery.swipebox.min.js?ver=2.0.5'></script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/responsive-lightbox/assets/infinitescroll/infinite-scroll.pkgd.min.js?ver=4.9.8'></script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript">
+/* <![CDATA[ */
+var rlArgs = {"script":"swipebox","selector":"lightbox","customEvents":"","activeGalleries":"1","animation":"1","hideCloseButtonOnMobile":"0","removeBarsOnMobile":"0","hideBars":"1","hideBarsDelay":"5000","videoMaxWidth":"1080","useSVG":"1","loopAtEnd":"0","woocommerce_gallery":"0","ajaxurl":"https:\/\/www.linuxtechi.com\/wp-admin\/admin-ajax.php","nonce":"da6271c3f5"};
+/* ]]> */
+</script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/responsive-lightbox/js/front.js?ver=2.0.5'></script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/wcp-contact-form/agp-core/assets/repeater/js/main.js?ver=4.9.8'></script>
+<link rel='https://api.w.org/' href='https://www.linuxtechi.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.linuxtechi.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.linuxtechi.com/wp-includes/wlwmanifest.xml" />
+<link rel='prev' title='10 YaST2 Command Examples in SUSE Linux' href='https://www.linuxtechi.com/yast2-command-examples-in-suse-linux/' />
+<link rel='next' title='Installation Steps of VirtualBox 5.0 on Ubuntu 15.04 / 14.04' href='https://www.linuxtechi.com/install-virtualbox-5-0-on-ubuntu-15-04-14-04/' />
+<meta name="generator" content="WordPress 4.9.8" />
+<link rel='shortlink' href='https://www.linuxtechi.com/?p=3276' />
+<link rel="alternate" type="application/json+oembed" href="https://www.linuxtechi.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.linuxtechi.com%2Finstall-configure-vnc-server-centos-7-rhel-7%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.linuxtechi.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.linuxtechi.com%2Finstall-configure-vnc-server-centos-7-rhel-7%2F&#038;format=xml" />
+<!--[if lt IE 9]>
+<script src="https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/js/ie/html5shiv-printshiv.min.js"></script>
+<script src="https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/js/ie/selectivizr.js"></script>
+<![endif]-->
+<link rel="icon" href="https://www.linuxtechi.com/wp-content/uploads/2018/06/linuxtechi-favicon-150x150.jpg" sizes="32x32" />
+<link rel="icon" href="https://www.linuxtechi.com/wp-content/uploads/2018/06/linuxtechi-favicon-300x300.jpg" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="https://www.linuxtechi.com/wp-content/uploads/2018/06/linuxtechi-favicon-300x300.jpg" />
+<meta name="msapplication-TileImage" content="https://www.linuxtechi.com/wp-content/uploads/2018/06/linuxtechi-favicon-300x300.jpg" />
+</head>
+<body data-rsssl=1 class="post-template-default single single-post postid-3276 single-format-standard wp-custom-logo col-2cl full-width topbar-enabled mobile-sidebar-hide-s2 header-desktop-sticky chrome">
+<div id="wrapper">
+<header id="header" class="both-menus-mobile-on two-mobile-menus both_menus header-ads-desktop  topbar-transparent no-header-img">
+<nav class="nav-container group desktop-menu desktop-sticky " id="nav-topbar" data-menu-id="header-1">
+
+<div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+<div class="ham__navbar-span-wrapper">
+<span class="line line-1"></span>
+<span class="line line-2"></span>
+<span class="line line-3"></span>
+</div>
+</div>
+<div class="nav-text"></div>
+<div class="topbar-toggle-down">
+<i class="fas fa-angle-double-down" aria-hidden="true" data-toggle="down" title="Expand menu"></i>
+<i class="fas fa-angle-double-up" aria-hidden="true" data-toggle="up" title="Collapse menu"></i>
+</div>
+<div class="nav-wrap container">
+<ul class="nav container-inner group"><li><a href="https://www.linuxtechi.com/">Home</a></li><li class="page_item page-item-156"><a href="https://www.linuxtechi.com/contact-us/">Contact Us</a></li><li class="page_item page-item-1779"><a href="https://www.linuxtechi.com/about-us/">About Us</a></li><li class="page_item page-item-2254"><a href="https://www.linuxtechi.com/write-for-us/">Write For LinuxTechi</a></li></ul> </div>
+</nav>
+<div class="container group">
+<div class="container-inner">
+<div class="group pad central-header-zone">
+<div class="logo-tagline-group">
+<p class="site-title"><a class="custom-logo-link" href="https://www.linuxtechi.com/" rel="home" title="Linuxtechi | Home page"><img src="https://www.linuxtechi.com/wp-content/uploads/2007/09/logo-1.png" alt="Linuxtechi"></a></p>
+</div>
+<div id="header-widgets">
+</div>
+</div>
+<nav class="nav-container group desktop-menu " id="nav-header" data-menu-id="header-2">
+
+<div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+<div class="ham__navbar-span-wrapper">
+<span class="line line-1"></span>
+<span class="line line-2"></span>
+<span class="line line-3"></span>
+</div>
+</div>
+<div class="nav-text"></div>
+<div class="nav-wrap container">
+<ul id="menu-linuxtechi" class="nav container-inner group"><li id="menu-item-6" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-6"><a href="https://www.linuxtechi.com/">Home</a></li>
+<li id="menu-item-5151" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-5151"><a href="https://www.linuxtechi.com/category/how-to/">How To</a></li>
+<li id="menu-item-5152" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5152"><a href="https://www.linuxtechi.com/category/linux-commands/">Commands</a></li>
+<li id="menu-item-158" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-158"><a href="https://www.linuxtechi.com/category/shell-scripting/">Shell Scripting</a></li>
+<li id="menu-item-5696" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5696"><a href="https://www.linuxtechi.com/category/monitoring-tools/">Monitoring Tools</a></li>
+<li id="menu-item-157" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-157"><a href="https://www.linuxtechi.com/category/linux-interview/">Linux Interview</a></li>
+<li id="menu-item-3227" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3227"><a target="_blank" href="https://linuxtechi.tradepub.com/category/information-technology-servers-and-linux-server-os/806/">Linux ebooks</a></li>
+<li id="menu-item-2255" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2255"><a href="https://www.linuxtechi.com/write-for-us/">Write For LinuxTechi</a></li>
+<li id="menu-item-1781" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1781"><a href="https://www.linuxtechi.com/contact-us/">Contact Us</a></li>
+<li id="menu-item-1780" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1780"><a href="https://www.linuxtechi.com/about-us/">About Us</a></li>
+</ul> </div>
+</nav>
+</div>
+</div>
+</header>
+<div class="container" id="page">
+<div class="container-inner">
+<div class="main">
+<div class="main-inner group">
+<section class="content">
+<div class="page-title pad group">
+<ul class="meta-single group">
+<li class="category"><a href="https://www.linuxtechi.com/category/how-to/" rel="category tag">How To</a></li>
+<li class="comments"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comments"><i class="far fa-comments"></i>14</a></li>
+</ul>
+</div>
+<div class="pad group">
+<article class="post-3276 post type-post status-publish format-standard has-post-thumbnail hentry category-how-to tag-vnc-server-centos-7">
+<div class="post-inner group">
+<h1 class="post-title entry-title">Install and Configure VNC Server in CentOS 7 and RHEL 7</h1>
+<p class="post-byline">by <span class="vcard author">
+<span class="fn"><a href="https://www.linuxtechi.com/author/pradeep/" title="Posts by Pradeep Kumar" rel="author">Pradeep Kumar</a></span>
+</span> &middot;
+Published <time class="published" datetime="August 18, 2015">August 18, 2015</time>
+&middot; Updated <time class="updated" datetime="August 3, 2017">August 3, 2017</time>
+</p>
+<div class="clear"></div>
+<div class="entry themeform share">
+<div class="entry-inner">
+<p><span style="color: #000000;">VNC (Virtual Network Computing) Server allows the remote Desktop sharing using remote VNC clients like VNC viewer. In CentOS 7 &amp; RHEL 7 package named &#8220;<strong>tigervnc-server</strong>&#8221; needs to be installed in order to setup the VNC server.</span></p>
+<p><span style="color: #000000;">In this article we will go through the installation and configuration of VNC Server on CentOS 7 / RHEL 7.</span></p>
+<h4><span style="color: #000000;">Step:1 Make Sure the Desktop Packages are installed</span></h4>
+<p><span style="color: #000000;">In order to setup VNC server first we make sure that Desktop is installed ,in My case i am using Gnome Desktop. If Gnome Desktop is not installed on your Linux machine then use the below command to install.</span></p><div class="QsdUVopX" style="clear:both;float:left;width:100%;margin:0 0 20px 0;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="7fd558221e3ffe08bfb07328-text/javascript"></script>
+<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-2130177517648108" data-ad-slot="3075279854"></ins>
+<script type="7fd558221e3ffe08bfb07328-text/javascript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<pre> [<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a7d5c8c8d3e7cbcec9d2dfd3c2c4cfce">[email&#160;protected]</a> ~]# yum groupinstall "GNOME Desktop"</pre>
+<h4><span style="color: #000000;">Step:2 Install Tigervnc and other dependency Package.</span></h4>
+<pre> [<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e99b86869da98580879c919d8c8a8180">[email&#160;protected]</a> ~]# yum install tigervnc-server xorg-x11-fonts-Type1</pre>
+<h4><span style="color: #000000;">Step:3 Setup VNC Server Configuration File.</span></h4>
+<p><span style="color: #000000;">Copy the VNC config file &#8220;/lib/systemd/system/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b0c6ded3c3d5c2c6d5c2f09ec3d5c2c6d9d3d5">[email&#160;protected]</a>&#8221; to the “/etc/systemd/system/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0a7c6469796f787c6f784a">[email&#160;protected]</a>:&lt;Port_Number&gt;.service”.</span></p>
+<p><span style="color: #000000;">While Copying the VNC config file we can mention the port number on which we want VNC service to be listen. In my case i am using port 3 , it means VNC will listen on “5903”. So while Connecting to the VNC server We can specify port number as <strong>&lt;IP_Address_VNC_Server:3&gt;</strong> or <strong>&lt;IP_Address_VNC_Server:5903&gt;</strong></span></p>
+<pre> [<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="384a57574c785451564d404c5d5b5051">[email&#160;protected]</a> ~]# cp /lib/systemd/system/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5b3aba6b6a0b7b3a0b785ebb6a0b7b3aca6a0">[email&#160;protected]</a> /etc/systemd/system/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4630282535233430233406">[email&#160;protected]</a>:3.service</pre>
+<h4><span style="color: #000000;">Step:4 Update the User&#8217;s Information in the Config File<br />
+</span></h4>
+<p><span style="color: #000000;"><span style="color: #000080;">[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9deff2f2e9ddf1f4f3e8e5e9f8fef5f4">[email&#160;protected]</a> ~]# vi /etc/systemd/system/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e6908885958394908394a6">[email&#160;protected]</a>:3.service</span><br />
+</span></p>
+<p><img class="alignnone wp-image-3279" src="https://www.linuxtechi.com/wp-content/uploads/2015/08/vnc-server-config-file.jpg" alt="vnc-server-config-file" width="601" height="198" /></p>
+<p><span style="color: #000000;">Replace the “linuxtechi” user as per your requirement. In my case linuxtechi user will able to control and manage its desktop session using remote VNC clients.</span></p>
+<p><span style="color: #000000;"><strong>Set the Firewall Rule if firewall is enabled on your linux box.</strong></span></p>
+<pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="22504d4d56624e4b4c575a5647414a4b">[email&#160;protected]</a> ~]# firewall-cmd --permanent --zone=public --add-port=5903/tcp
+success
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="acdec3c3d8ecc0c5c2d9d4d8c9cfc4c5">[email&#160;protected]</a> ~]# firewall-cmd --reload
+success
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1e6c71716a5e7277706b666a7b7d7677">[email&#160;protected]</a> ~]#</pre>
+<h4><span style="color: #000000;">Step:5 Set the VNC password for the User.</span></h4>
+<p><span style="color: #000000;">Switch to the user (linuxtechi) and run vncserver command to set the password as shown below :<br />
+</span></p>
+<p><img class="alignnone wp-image-3280" src="https://www.linuxtechi.com/wp-content/uploads/2015/08/vncserver-passwd.jpg" alt="vncserver-passwd" width="595" height="211" /></p>
+<p><span style="color: #000000;"><strong>Start and Enable the VNC Service at boot.</strong></span></p>
+<p><span style="color: #000000;">Execute below commands as root only.</span></p>
+<pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed9f828299ad818483989599888e8584">[email&#160;protected]</a> ~]# systemctl daemon-reload
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0e7c61617a4e6267607b767a6b6d6667">[email&#160;protected]</a> ~]# systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ff89919c8c9a8d899a8dbf">[email&#160;protected]</a>:3.service
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1765787863577b7e79626f6372747f7e">[email&#160;protected]</a> ~]# systemctl enable <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ee8f0fdedfbece8fbecde">[email&#160;protected]</a>:3.service
+ln -s '/etc/systemd/system/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f6809895859384809384b6">[email&#160;protected]</a>:3.service' '/etc/systemd/system/multi-user.target.wants/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="24524a4757415652415664">[email&#160;protected]</a>:3.service'
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c7e6363784c606562797478696f6465">[email&#160;protected]</a> ~]#</pre>
+<h4><span style="color: #000000;">Step:6 Access Remote Desktop Session.</span></h4>
+<p><strong><span style="color: #000000;">From Ubuntu Machine :</span></strong></p>
+<p><span style="color: #000080;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="88fdeafde6fcfdc8e4e7ebe9e4">[email&#160;protected]</a>host:~$ vncviewer 192.168.1.15:3</span></p>
+<p><span style="color: #000000;">Enter the VNC password that we have set in above step, after validating the authentication Remote Desktop session will start.</span></p>
+<p><strong><span style="color: #000000;">From Windows Machine Using VNC Viewer</span></strong></p>
+<p><span style="color: #000000;">Enter the VNC Server IP Address and Port Number and then Click on OK</span></p>
+<p><img class="alignnone size-full wp-image-3281" src="https://www.linuxtechi.com/wp-content/uploads/2015/08/vncviewer.jpg" alt="vncviewer" width="471" height="250" /></p>
+<p><span style="color: #000000;">Enter the VNC Password &amp; then click on OK.</span></p>
+<p><img class="alignnone size-full wp-image-3278" src="https://www.linuxtechi.com/wp-content/uploads/2015/08/vnc-password.jpg" alt="vnc-password" width="453" height="304" /></p>
+<p><span style="color: #000000;">Desktop Session Will start after authentication.</span></p>
+<p><img class="alignnone wp-image-3277" src="https://www.linuxtechi.com/wp-content/uploads/2015/08/remote-desktop-vncviewer.jpg" alt="remote-desktop-vncviewer" width="599" height="379" /></p>
+<nav class="pagination group">
+</nav>
+</div>
+<div class="sharrre-container ">
+<span>Share</span>
+<div id="twitter" data-url="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/" data-text="Install and Configure VNC Server in CentOS 7 and RHEL 7" data-title="Tweet"><a class="box" href="#"><div class="count" href="#"><i class="fas fa-plus"></i></div><div class="share"><i class="fab fa-twitter"></i></div></a></div>
+<div id="facebook" data-url="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/" data-text="Install and Configure VNC Server in CentOS 7 and RHEL 7" data-title="Like"></div>
+<div id="googleplus" data-url="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/" data-text="Install and Configure VNC Server in CentOS 7 and RHEL 7" data-title="+1"></div>
+<div id="linkedin" data-url="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/" data-text="Install and Configure VNC Server in CentOS 7 and RHEL 7" data-title="Publish on Linked In"></div>
+</div>
+<style type="text/css"></style>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="7fd558221e3ffe08bfb07328-text/javascript">
+  	// Sharrre
+  	jQuery( function($) {
+      //<temporary>
+      $('head').append( $( '<style>', { id : 'hide-sharre-count', type : 'text/css', html:'.sharrre-container.no-counter .box .count {display:none;}' } ) );
+      //</temporary>
+                		$('#twitter').sharrre({
+        			share: {
+        				twitter: true
+        			},
+        			template: '<a class="box" href="#"><div class="count" href="#">{total}</div><div class="share"><i class="fab fa-twitter"></i></div></a>',
+        			enableHover: false,
+        			enableTracking: true,
+        			buttons: { twitter: {via: 'linuxtechi'}},
+        			click: function(api, options){
+        				api.simulateClick();
+        				api.openPopup('twitter');
+        			}
+        		});
+            		            $('#facebook').sharrre({
+        			share: {
+        				facebook: true
+        			},
+        			template: '<a class="box" href="#"><div class="count" href="#">{total}</div><div class="share"><i class="fab fa-facebook-square"></i></div></a>',
+        			enableHover: false,
+        			enableTracking: true,
+              buttons:{layout: 'box_count'},
+        			click: function(api, options){
+        				api.simulateClick();
+        				api.openPopup('facebook');
+        			}
+        		});
+                                    		$('#googleplus').sharrre({
+        			share: {
+        				googlePlus: true
+        			},
+        			template: '<a class="box" href="#"><div class="count" href="#">{total}</div><div class="share"><i class="fab fa-google-plus-square"></i></div></a>',
+        			enableHover: false,
+        			enableTracking: true,
+              buttons:{size: 'tall'},
+        			urlCurl: 'https://www.linuxtechi.com/wp-content/plugins/hueman-addons/addons/assets/front/js/sharrre.php',
+        			click: function(api, options){
+        				api.simulateClick();
+        				api.openPopup('googlePlus');
+        			}
+        		});
+                                    $('#linkedin').sharrre({
+              share: {
+                linkedin: true
+              },
+              template: '<a class="box" href="#" rel="nofollow"><div class="count" href="#">{total}</div><div class="share"><i class="fab fa-linkedin"></i></div></a>',
+              enableHover: false,
+              enableTracking: true,
+              buttons: {
+              linkedin: {
+                description: 'Install and Configure VNC Server in CentOS 7 and RHEL 7',media: 'https://www.linuxtechi.com/wp-content/uploads/2015/08/vncviewer-1.jpg'                }
+              },
+              click: function(api, options){
+                api.simulateClick();
+                api.openPopup('linkedin');
+              }
+            });
+        
+    		
+    			// Scrollable sharrre bar, contributed by Erik Frye. Awesome!
+    			var $_shareContainer = $(".sharrre-container"),
+    			    $_header         = $('#header'),
+    			    $_postEntry      = $('.entry'),
+        			$window          = $(window),
+        			startSharePosition = $_shareContainer.offset(),//object
+        			contentBottom    = $_postEntry.offset().top + $_postEntry.outerHeight(),
+        			topOfTemplate    = $_header.offset().top,
+              topSpacing       = _setTopSpacing();
+
+          //triggered on scroll
+    			shareScroll = function(){
+      				var scrollTop     = $window.scrollTop() + topOfTemplate,
+      				    stopLocation  = contentBottom - ($_shareContainer.outerHeight() + topSpacing);
+
+              $_shareContainer.css({position : 'fixed'});
+
+      				if( scrollTop > stopLocation ){
+      					  $_shareContainer.css( { position:'relative' } );
+                  $_shareContainer.offset(
+                      {
+                        top: contentBottom - $_shareContainer.outerHeight(),
+                        left: startSharePosition.left,
+                      }
+                  );
+      				}
+      				else if (scrollTop >= $_postEntry.offset().top - topSpacing){
+      					 $_shareContainer.css( { position:'fixed',top: '100px' } );
+                 $_shareContainer.offset(
+                      {
+                        //top: scrollTop + topSpacing,
+                        left: startSharePosition.left,
+                      }
+                  );
+      				} else if (scrollTop < startSharePosition.top + ( topSpacing - 1 ) ) {
+      					 $_shareContainer.css( { position:'relative' } );
+                 $_shareContainer.offset(
+                      {
+                        top: $_postEntry.offset().top,
+                        left:startSharePosition.left,
+                      }
+                  );
+      				}
+    			},
+
+          //triggered on resize
+    			shareMove = function() {
+      				startSharePosition = $_shareContainer.offset();
+      				contentBottom = $_postEntry.offset().top + $_postEntry.outerHeight();
+      				topOfTemplate = $_header.offset().top;
+      				_setTopSpacing();
+    			};
+
+    			/* As new images load the page content body gets longer. The bottom of the content area needs to be adjusted in case images are still loading. */
+    			setTimeout( function() {
+    				  contentBottom = $_postEntry.offset().top + $_postEntry.outerHeight();
+    			}, 2000);
+
+          function _setTopSpacing(){
+              var distanceFromTop  = 20;
+
+              if( $window.width() > 1024 ) {
+                topSpacing = distanceFromTop + $('.nav-wrap').outerHeight();
+              } else {
+                topSpacing = distanceFromTop;
+              }
+              return topSpacing;
+          }
+
+          //setup event listeners
+          $window.scroll( _.throttle( function() {
+              if ( $window.width() > 719 ) {
+                  shareScroll();
+              } else {
+                  $_shareContainer.css({
+                      top:'',
+                      left:'',
+                      position:''
+                  })
+              }
+          }, 50 ) );
+          $window.resize( _.debounce( function() {
+              if ( $window.width() > 719 ) {
+                  shareMove();
+              } else {
+                  $_shareContainer.css({
+                      top:'',
+                      left:'',
+                      position:''
+                  })
+              }
+          }, 50 ) );
+    		
+  	});
+</script>
+<div class="clear"></div>
+</div>
+</div>
+</article>
+<div class="clear"></div>
+<p class="post-tags"><span>Tags:</span> <a href="https://www.linuxtechi.com/tag/vnc-server-centos-7/" rel="tag">vnc server centos 7</a></p>
+<ul class="post-nav group">
+<li class="next"><a href="https://www.linuxtechi.com/install-virtualbox-5-0-on-ubuntu-15-04-14-04/" rel="next"><i class="fas fa-chevron-right"></i><strong>Next story</strong> <span>Installation Steps of VirtualBox 5.0 on Ubuntu 15.04 / 14.04</span></a></li>
+<li class="previous"><a href="https://www.linuxtechi.com/yast2-command-examples-in-suse-linux/" rel="prev"><i class="fas fa-chevron-left"></i><strong>Previous story</strong> <span>10 YaST2 Command Examples in SUSE Linux</span></a></li>
+</ul>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="7fd558221e3ffe08bfb07328-text/javascript"></script>
+<ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2130177517648108" data-ad-slot="5924076189"></ins>
+<script type="7fd558221e3ffe08bfb07328-text/javascript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<section id="comments" class="themeform">
+<h3 class="heading">14 Responses</h3>
+<ul class="comment-tabs group">
+<li class="active"><a href="#commentlist-container"><i class="far fa-comments"></i>Comments<span>14</span></a></li>
+<li><a href="#pinglist-container"><i class="fas fa-share"></i>Pingbacks<span>0</span></a></li>
+</ul>
+<div id="commentlist-container" class="comment-tab">
+<ol class="commentlist">
+<li class="comment even thread-even depth-1" id="comment-292">
+<div id="div-comment-292" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/396e40673939f6169c116beb84bf704f?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/396e40673939f6169c116beb84bf704f?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">José Luis Alonso</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-292">
+January 13, 2016 at 5:01 pm</a> </div>
+<p>Hi!</p>
+<p>I&#8217;m from Mexico. Thank you for your post. This is a good post, i can to installed and configured the vncserver</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=292#respond' onclick='return addComment.moveForm( "div-comment-292", "292", "respond", "3276" )' aria-label='Reply to José Luis Alonso'>Reply</a></div>
+</div>
+</li>
+<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-293">
+<div id="div-comment-293" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/13623147a7ba93c154987def5f68c14c?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/13623147a7ba93c154987def5f68c14c?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Aravindh</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-293">
+February 9, 2016 at 2:37 am</a> </div>
+<p>Hi Pradeep, Thank you for your post.It worked for me. once again thanks. 🙂</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=293#respond' onclick='return addComment.moveForm( "div-comment-293", "293", "respond", "3276" )' aria-label='Reply to Aravindh'>Reply</a></div>
+</div>
+</li>
+<li class="comment even thread-even depth-1" id="comment-294">
+<div id="div-comment-294" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/ca15235f9556b5122004119146c9af03?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/ca15235f9556b5122004119146c9af03?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Pablo</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-294">
+April 1, 2016 at 2:58 pm</a> </div>
+<p>Hi there! Great job, easily explained. Works perfect.</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=294#respond' onclick='return addComment.moveForm( "div-comment-294", "294", "respond", "3276" )' aria-label='Reply to Pablo'>Reply</a></div>
+</div>
+</li>
+<li class="comment odd alt thread-odd thread-alt depth-1 parent" id="comment-295">
+<div id="div-comment-295" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/b9a12e0b8bfcb89bd329813bbcfea4c7?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/b9a12e0b8bfcb89bd329813bbcfea4c7?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">David Livingstone</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-295">
+May 17, 2016 at 12:06 am</a> </div>
+<p>I did everything Exactly by the book, and ended here:<br />
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dfadb0b0ab9f90afabb68fb3baa7f2ece7ef">[email&#160;protected]</a> ~]# systemctl daemon-reload<br />
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="42302d2d36020d32362b122e273a6f717a72">[email&#160;protected]</a> ~]# systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5c2a323f2f392e2a392e1c">[email&#160;protected]</a>:3.service<br />
+Job for <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ee8f0fdedfbece8fbecde">[email&#160;protected]</a>:3.service failed because the control process exited with error code. See &#8220;systemctl status <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b8ced6dbcbddcaceddcaf8">[email&#160;protected]</a>:3.service&#8221; and &#8220;journalctl -xe&#8221; for details.<br />
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="eb9984849faba49b9f82bb878e93c6d8d3db">[email&#160;protected]</a> ~]# systemctl status <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94e2faf7e7f1e6e2f1e6d4">[email&#160;protected]</a>:3.service<br />
+● <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="50263e3323352226352210">[email&#160;protected]</a>:3.service &#8211; Remote desktop service (VNC)<br />
+Loaded: loaded (/etc/systemd/system/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="681e060b1b0d1a1e0d1a28">[email&#160;protected]</a>:3.service; disabled; vendor preset: disabled)<br />
+Active: failed (Result: exit-code) since Tue 2016-05-17 09:45:47 AEST; 44s ago<br />
+Process: 1238 ExecStart=/usr/sbin/runuser -l david -c /usr/bin/vncserver %i (code=exited, status=2)<br />
+Process: 1232 ExecStartPre=/bin/sh -c /usr/bin/vncserver -kill %i &gt; /dev/null 2&gt;&amp;1 || : (code=exited, status=0/SUCCESS)</p>
+<p>May 17 09:45:47 OptiPlex-380 systemd[1]: Starting Remote desktop service (VNC)&#8230;<br />
+May 17 09:45:47 OptiPlex-380 systemd[1]: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7c1d9d4c4d2c5c1d2c5f7">[email&#160;protected]</a>:3.service: control process exited, code=exited status=2<br />
+May 17 09:45:47 OptiPlex-380 systemd[1]: Failed to start Remote desktop service (VNC).<br />
+May 17 09:45:47 OptiPlex-380 systemd[1]: Unit <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f7819994849285819285b7">[email&#160;protected]</a>:3.service entered failed state.<br />
+May 17 09:45:47 OptiPlex-380 systemd[1]: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="51273f3222342327342311">[email&#160;protected]</a>:3.service failed.</p>
+<p>Any hints? I&#8217;ve checked the forums I could find, with no clue. Any help greatly appreciated.</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=295#respond' onclick='return addComment.moveForm( "div-comment-295", "295", "respond", "3276" )' aria-label='Reply to David Livingstone'>Reply</a></div>
+</div>
+<ul class="children">
+<li class="comment even depth-2" id="comment-297">
+<div id="div-comment-297" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/3eb7678a9de4e51969772dc0880e8085?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/3eb7678a9de4e51969772dc0880e8085?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">anis</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-297">
+November 14, 2016 at 3:28 pm</a> </div>
+<p>you should go to Administration&gt;share&gt;allow &#8220;distance access&#8221;</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=297#respond' onclick='return addComment.moveForm( "div-comment-297", "297", "respond", "3276" )' aria-label='Reply to anis'>Reply</a></div>
+</div>
+</li>
+</ul>
+</li>
+<li class="comment odd alt thread-even depth-1" id="comment-296">
+<div id="div-comment-296" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/584956c8b9e8e6e3babfe0c3e8bce8c2?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/584956c8b9e8e6e3babfe0c3e8bce8c2?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Steve</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-296">
+August 5, 2016 at 2:29 pm</a> </div>
+<p>Followed you instructons for RHEL7, connected from Win7 laptop. Works perfect. Thanks!</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=296#respond' onclick='return addComment.moveForm( "div-comment-296", "296", "respond", "3276" )' aria-label='Reply to Steve'>Reply</a></div>
+</div>
+</li>
+<li class="comment even thread-odd thread-alt depth-1" id="comment-298">
+<div id="div-comment-298" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/88ba937cca5d68faa51931eb79e149a3?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/88ba937cca5d68faa51931eb79e149a3?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Magesh Mahi</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-298">
+January 27, 2017 at 3:58 am</a> </div>
+<p>Worked Like a Charm in Centos 7 windows 10 laptop remoting into it &#8230;</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=298#respond' onclick='return addComment.moveForm( "div-comment-298", "298", "respond", "3276" )' aria-label='Reply to Magesh Mahi'>Reply</a></div>
+</div>
+</li>
+<li class="comment odd alt thread-even depth-1" id="comment-299">
+<div id="div-comment-299" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/06041e8dcaec928f169f5f0e7c750e72?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/06041e8dcaec928f169f5f0e7c750e72?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">DeeZay</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-299">
+March 10, 2017 at 10:37 am</a> </div>
+<p>Thanks Its Working Perfect</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=299#respond' onclick='return addComment.moveForm( "div-comment-299", "299", "respond", "3276" )' aria-label='Reply to DeeZay'>Reply</a></div>
+</div>
+</li>
+<li class="comment even thread-odd thread-alt depth-1" id="comment-627">
+<div id="div-comment-627" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/5a94d697a9e00d248792ba4df320e308?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/5a94d697a9e00d248792ba4df320e308?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Sandeep</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-627">
+April 7, 2017 at 11:06 am</a> </div>
+<p>Can I get this work without Gnome Desktop group package?</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=627#respond' onclick='return addComment.moveForm( "div-comment-627", "627", "respond", "3276" )' aria-label='Reply to Sandeep'>Reply</a></div>
+</div>
+</li>
+<li class="comment odd alt thread-even depth-1 parent" id="comment-752">
+<div id="div-comment-752" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/3ccf5d9607396aae2fcabfa77ceb89fd?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/3ccf5d9607396aae2fcabfa77ceb89fd?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Brianthreedee</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-752">
+May 4, 2017 at 11:22 pm</a> </div>
+<p>I&#8217;m a complete noob: Running CentOS 7 &#8211; Gnome installed. Followed all instructions. I entered the following;</p>
+<p>systemctl enable <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="67110904140211021527">[email&#160;protected]</a>:5901.service ln -s &#8216;/etc/systemd/system/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="02746c6171677074677042">[email&#160;protected]</a>:5901.service&#8217; &#8216;/etc/systemd/system/multi-user.target.wants/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="89e7ffeafaecfbffecfbc9">[email&#160;protected]</a>:5901.service&#8217;</p>
+<p>When I hit enter I get Failed to parse signal string /etc/systemd/system/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2c5a424f5f495e5a495e6c">[email&#160;protected]</a>:5901.service</p>
+<p>Any help would be greatly appreciated!</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=752#respond' onclick='return addComment.moveForm( "div-comment-752", "752", "respond", "3276" )' aria-label='Reply to Brianthreedee'>Reply</a></div>
+</div>
+<ul class="children">
+<li class="comment byuser comment-author-pradeep bypostauthor even depth-2" id="comment-753">
+<div id="div-comment-753" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/aee3114362d9999a6c9612d041d34f49?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aee3114362d9999a6c9612d041d34f49?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn"><a href='https://www.linuxtechi.com' rel='external nofollow' class='url'>Pradeep Kumar</a></cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-753">
+May 5, 2017 at 2:04 am</a> </div>
+<p>Please check the logs &#8220;/var/log/messages&#8221; and re-check all the steps as well.</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=753#respond' onclick='return addComment.moveForm( "div-comment-753", "753", "respond", "3276" )' aria-label='Reply to Pradeep Kumar'>Reply</a></div>
+</div>
+</li>
+</ul>
+</li>
+<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-855">
+<div id="div-comment-855" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/5440766f1e2ce1e7c4d9aa750aa2842e?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/5440766f1e2ce1e7c4d9aa750aa2842e?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">jirka</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-855">
+May 26, 2017 at 4:19 pm</a> </div>
+<p>Hi, I have a little problem. Everything went OK, but after<br />
+systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="483e262b3b2d3a3e2d3a08">[email&#160;protected]</a>:1.service </p>
+<p>I got this:</p>
+<p>Job for <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2751494454425551425567">[email&#160;protected]</a>:1.service failed because a configured resource limit was exceeded. See &#8220;systemctl status <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="13657d7060766165766153">[email&#160;protected]</a>:1.service&#8221; and &#8220;journalctl -xe&#8221; for details.</p>
+<p>I tried to remove /tmp/.X11-unix/</p>
+<p>without avail.</p>
+<p>Can somebody help. Thank</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=855#respond' onclick='return addComment.moveForm( "div-comment-855", "855", "respond", "3276" )' aria-label='Reply to jirka'>Reply</a></div>
+</div>
+</li>
+<li class="comment even thread-even depth-1" id="comment-4994">
+<div id="div-comment-4994" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/c22dd7fe083247efc319b643e014509c?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/c22dd7fe083247efc319b643e014509c?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Amar</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-4994">
+June 24, 2018 at 12:03 pm</a> </div>
+<p>Thank you very much.</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=4994#respond' onclick='return addComment.moveForm( "div-comment-4994", "4994", "respond", "3276" )' aria-label='Reply to Amar'>Reply</a></div>
+</div>
+</li>
+<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-5262">
+<div id="div-comment-5262" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/06e62660e8a281bd08f1b7aae67d2430?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/06e62660e8a281bd08f1b7aae67d2430?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Pete Kowalsky</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/#comment-5262">
+July 20, 2018 at 12:48 am</a> </div>
+<p>Great little guide &#8211; works like a champ. I like that if you follow the instructions exactly you&#8217;ll wind up with a VNC server that starts on host boot, and you can even login via the Gnome login&#8230; I&#8217;m printing this page to a PDF and stashing it. THANKS!</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://www.linuxtechi.com/install-configure-vnc-server-centos-7-rhel-7/?replytocom=5262#respond' onclick='return addComment.moveForm( "div-comment-5262", "5262", "respond", "3276" )' aria-label='Reply to Pete Kowalsky'>Reply</a></div>
+</div>
+</li>
+</ol>
+</div>
+<div id="respond" class="comment-respond">
+<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/install-configure-vnc-server-centos-7-rhel-7/#respond" style="display:none;">Cancel reply</a></small></h3> <form action="https://www.linuxtechi.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea autocomplete="nope" id="53cfccc449" name="53cfccc449" cols="45" rows="8" maxlength="65525" required="required"></textarea><textarea id="comment" aria-hidden="true" name="comment" autocomplete="nope" style="padding:0;clip:rect(1px, 1px, 1px, 1px);position:absolute !important;white-space:nowrap;height:1px;width:1px;overflow:hidden;" tabindex="-1"></textarea><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="7fd558221e3ffe08bfb07328-text/javascript">document.getElementById("comment").setAttribute( "id", "3b8aab2e63eaeac05a845529cbea0cca" );document.getElementById("53cfccc449").setAttribute( "id", "comment" );</script></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" /></p>
+<p class="cptch_block"><span class="cptch_wrap cptch_math_actions">
+<label class="cptch_label" for="cptch_input_5"><span class="cptch_span">9</span>
+<span class="cptch_span">&nbsp;&minus;&nbsp;</span>
+<span class="cptch_span"><input id="cptch_input_5" class="cptch_input cptch_wp_comments" type="text" autocomplete="off" name="cptch_number" value="" maxlength="2" size="2" aria-required="true" required="required" style="margin-bottom:0;display:inline;font-size: 12px;width: 40px;" /></span>
+<span class="cptch_span">&nbsp;=&nbsp;</span>
+<span class="cptch_span">&#115;ix</span>
+<input type="hidden" name="cptch_result" value="EuU=" /><input type="hidden" name="cptch_time" value="1538551114" />
+<input type="hidden" name="cptch_form" value="wp_comments" />
+</label><span class="cptch_reload_button_wrap hide-if-no-js">
+<noscript>
+						<style type="text/css">
+							.hide-if-no-js {
+								display: none !important;
+							}
+						</style>
+					</noscript>
+<span class="cptch_reload_button dashicons dashicons-update"></span>
+</span></span></p><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='3276' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p> </form>
+</div>
+</section> </div>
+</section>
+<div class="sidebar s1 collapsed" data-position="right" data-layout="col-2cl" data-sb-id="s1">
+<a class="sidebar-toggle" title="Expand Sidebar"><i class="fas icon-sidebar-toggle"></i></a>
+<div class="sidebar-content">
+<div class="sidebar-top group">
+<p>Follow:</p>
+<ul class="social-links"><li><a rel="nofollow" class="social-tooltip" title="Follow us on Facebook" aria-label="Follow us on Facebook" href="http://www.facebook.com/linuxtechi" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-facebook"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Twitter" aria-label="Follow us on Twitter" href="http://www.twitter.com/linuxtechi" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-twitter"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Google-plus" aria-label="Follow us on Google-plus" href="https://plus.google.com/u/0/106374064320328901397/" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-google-plus"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Rss" aria-label="Follow us on Rss" href="https://www.linuxtechi.com/feed" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fas fa-rss"></i></a></li></ul> </div>
+<div id="text-9" class="widget widget_text"> <div class="textwidget"><p><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="7fd558221e3ffe08bfb07328-text/javascript"></script><br />
+<br />
+<ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 600px;" data-ad-client="ca-pub-2130177517648108" data-ad-slot="7532375294"></ins><br />
+<script type="7fd558221e3ffe08bfb07328-text/javascript">
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+</div>
+</div> <div id="wp_subscribe-2" class="widget wp_subscribe">
+<div id="wp-subscribe" class="wp-subscribe-wrap wp-subscribe wp-subscribe-1" data-thanks_page="0" data-thanks_page_url="" data-thanks_page_new_window="0">
+<h4 class="title">Subscribe to Newsletter</h4>
+<p class="text"></p>
+<form action="https://feedburner.google.com/fb/a/mailverify?uri=linuxteci" method="post" class="wp-subscribe-form wp-subscribe-feedburner" id="wp-subscribe-form-1" target="popupwindow">
+<input class="regular-text email-field" type="text" name="email" placeholder="Enter your email here">
+<input type="hidden" name="uri" value="linuxteci">
+<input type="hidden" name="loc" value="en_US">
+<input type="hidden" name="form_type" value="widget">
+<input type="hidden" name="service" value="feedburner">
+<input type="hidden" name="widget" value="wp_subscribe-2">
+<div class="wps-consent-wrapper">
+<label for="consent-field">
+<input class="consent-field" id="consent-field" type="checkbox" name="consent" required />
+I consent to my submitted data being collected via this form* </label>
+</div>
+<input class="submit" type="submit" name="submit" value="Sign Up Now">
+</form>
+<div class="wp-subscribe-loader">
+<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+<path fill="#ffffff" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
+</path>
+</svg>
+</div>
+<p class="thanks">Thank you for subscribing.</p>
+<p class="error">Something went wrong.</p>
+<div class="clear"></div>
+<p class="footer-text">we respect your privacy and take protecting it seriously</p>
+</div>
+</div>
+<div id="google-badge-box-2" class="widget mts_googleplus"><h3 class="widget-title">Follow Us On G+</h3> <script src="https://apis.google.com/js/platform.js" async defer type="7fd558221e3ffe08bfb07328-text/javascript"></script>
+<div class="g-person" data-width="300" data-href="https://plus.google.com/u/0/106374064320328901397/" data-layout="landscape" data-theme="light" data-rel="publisher" data-showtagline="true" data-showcoverphoto="true"></div>
+</div><div id="alxtabs-2" class="widget widget_hu_tabs">
+<h3 class="widget-title">Most Popular Post</h3><ul class="alx-tabs-nav group tab-count-2"><li class="alx-tab tab-recent"><a href="#tab-recent-2" title="Recent Posts"><i class="far fa-clock"></i><span>Recent Posts</span></a></li><li class="alx-tab tab-comments"><a href="#tab-comments-2" title="Recent Comments"><i class="far fa-comments"></i><span>Recent Comments</span></a></li></ul>
+<div class="alx-tabs-container">
+<ul id="tab-recent-2" class="alx-tab group thumbs-enabled">
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/redhat-clustering-pacemaker-interview-questions-answers/" title="20 Red Hat Clustering (Pacemaker) Interview Questions and Answers">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2018/09/RedHat-Clustering-Interview-Questions-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="RedHat-Clustering-Interview-Questions" srcset="https://www.linuxtechi.com/wp-content/uploads/2018/09/RedHat-Clustering-Interview-Questions-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2018/09/RedHat-Clustering-Interview-Questions-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2018/09/RedHat-Clustering-Interview-Questions-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/redhat-clustering-pacemaker-interview-questions-answers/" rel="bookmark" title="20 Red Hat Clustering (Pacemaker) Interview Questions and Answers">20 Red Hat Clustering (Pacemaker) Interview Questions and Answers</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/boot-ubuntu-18-04-debian-9-rescue-emergency-mode/" title="How to Boot Ubuntu 18.04 / Debian 9 Server in Rescue (Single User mode) / Emergency Mode">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2018/09/Rescue-Emeregncy-Mode-Ubuntu18-Debian9-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="" srcset="https://www.linuxtechi.com/wp-content/uploads/2018/09/Rescue-Emeregncy-Mode-Ubuntu18-Debian9-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2018/09/Rescue-Emeregncy-Mode-Ubuntu18-Debian9-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2018/09/Rescue-Emeregncy-Mode-Ubuntu18-Debian9-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/boot-ubuntu-18-04-debian-9-rescue-emergency-mode/" rel="bookmark" title="How to Boot Ubuntu 18.04 / Debian 9 Server in Rescue (Single User mode) / Emergency Mode">How to Boot Ubuntu 18.04 / Debian 9 Server in Rescue (Single User mode) / Emergency Mode</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/install-configure-nginx-ubuntu-18-04-debian-9/" title="How to Install and Configure Nginx &#8216;Web Server&#8217; on Ubuntu 18.04 / Debian 9">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2018/09/Install-Nginx-Ubuntu18-Debian9-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="" srcset="https://www.linuxtechi.com/wp-content/uploads/2018/09/Install-Nginx-Ubuntu18-Debian9-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2018/09/Install-Nginx-Ubuntu18-Debian9-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2018/09/Install-Nginx-Ubuntu18-Debian9-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/install-configure-nginx-ubuntu-18-04-debian-9/" rel="bookmark" title="How to Install and Configure Nginx &#8216;Web Server&#8217; on Ubuntu 18.04 / Debian 9">How to Install and Configure Nginx &#8216;Web Server&#8217; on Ubuntu 18.04 / Debian 9</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/opensuse-leap-15-installation-guide-screenshots/" title="OpenSUSE Leap 15 installation guide with Screenshots">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2018/09/openSUSE-Leap15-Bootloader-Screen-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="openSUSE-Leap15-Bootloader-Screen" srcset="https://www.linuxtechi.com/wp-content/uploads/2018/09/openSUSE-Leap15-Bootloader-Screen-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2018/09/openSUSE-Leap15-Bootloader-Screen-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2018/09/openSUSE-Leap15-Bootloader-Screen-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/opensuse-leap-15-installation-guide-screenshots/" rel="bookmark" title="OpenSUSE Leap 15 installation guide with Screenshots">OpenSUSE Leap 15 installation guide with Screenshots</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/capture-analyze-packets-tcpdump-command-linux/" title="How to capture and analyze packets with tcpdump command on Linux">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2018/08/tcpdump-command-examples-linux-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="tcpdump-command-examples-linux" srcset="https://www.linuxtechi.com/wp-content/uploads/2018/08/tcpdump-command-examples-linux-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2018/08/tcpdump-command-examples-linux-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2018/08/tcpdump-command-examples-linux-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/capture-analyze-packets-tcpdump-command-linux/" rel="bookmark" title="How to capture and analyze packets with tcpdump command on Linux">How to capture and analyze packets with tcpdump command on Linux</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/define-use-functions-linux-shell-script/" title="How to define and use functions in Linux Shell Script">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2018/08/Functions-Linux-Shell-Script-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="Functions-Linux-Shell-Script" srcset="https://www.linuxtechi.com/wp-content/uploads/2018/08/Functions-Linux-Shell-Script-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2018/08/Functions-Linux-Shell-Script-150x150.jpg 150w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/define-use-functions-linux-shell-script/" rel="bookmark" title="How to define and use functions in Linux Shell Script">How to define and use functions in Linux Shell Script</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/git-command-practical-examples-linux-part-2/" title="Learn Git Command with Practical Examples on Linux &#8211; Part 2">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2018/08/Git-Command-Example-Part2-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="Git-Command-Example-Part2" srcset="https://www.linuxtechi.com/wp-content/uploads/2018/08/Git-Command-Example-Part2-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2018/08/Git-Command-Example-Part2-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2018/08/Git-Command-Example-Part2-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+ <div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/git-command-practical-examples-linux-part-2/" rel="bookmark" title="Learn Git Command with Practical Examples on Linux &#8211; Part 2">Learn Git Command with Practical Examples on Linux &#8211; Part 2</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/install-use-openvswitch-kvm-centos-7-rhel-7/" title="How to Install and use Open vSwitch 2.9 with KVM on CentOS 7 / RHEL 7 Server">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2018/08/Install-openvswitch-KVM-CentOS7-RHEL7-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="Install-openvswitch-KVM-CentOS7-RHEL7" srcset="https://www.linuxtechi.com/wp-content/uploads/2018/08/Install-openvswitch-KVM-CentOS7-RHEL7-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2018/08/Install-openvswitch-KVM-CentOS7-RHEL7-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2018/08/Install-openvswitch-KVM-CentOS7-RHEL7-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/install-use-openvswitch-kvm-centos-7-rhel-7/" rel="bookmark" title="How to Install and use Open vSwitch 2.9 with KVM on CentOS 7 / RHEL 7 Server">How to Install and use Open vSwitch 2.9 with KVM on CentOS 7 / RHEL 7 Server</a></p>
+</div>
+</li>
+</ul>
+<ul id="tab-comments-2" class="alx-tab group ">
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Raphael says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/add-remote-linux-windows-host-icinga-2-monitoring/#comment-6049">I have the same problem than you, everything seems working except...</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Karthik VR says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/install-configure-icinga2-centos-7-rhel-7/#comment-6042">I get the error - &quot;icinga2: Can&#039;t send external Icinga command...</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Karthik VR says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/install-configure-icinga2-centos-7-rhel-7/#comment-6041">Hi Pradeep.. Thanks a ton for the article. The steps were...</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Ahsan says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/install-kubernetes-1-7-centos7-rhel7/#comment-6023">awesome work man nice explanation thanks</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Drev says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/ubuntu-18-04-lts-desktop-installation-guide-screenshots/#comment-6014">Thanks for the pictures, I was looking for the different partition...</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">ahmed aldesoky says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/dual-boot-ubuntu-18-04-lts-with-windows-10/#comment-6007">what aboutif i want to use partion which on windows???</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Tharun says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/deploy-tripleo-overcloud-controller-computes-centos-7/#comment-6005">Hi, I&#039;ve got the same error too,...</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">ericm says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/execute-linux-commands-remote-system-over-ssh/#comment-6004">Hi Pradeep, the quote below seems to imply...</a></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="ws_fb_like_box-2" class="widget widget_ws_fb_like_box"><h3 class="widget-title">Find LinuxTechi on Facebook</h3><div class="fb-page ws-fb-like-box" data-href="https://www.facebook.com/linuxtechi" data-tabs="" data-width="300" data-height="500" data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="true">
+<div class="fb-xfbml-parse-ignore">
+<blockquote cite="https://www.facebook.com/linuxtechi">
+<a href="https://www.facebook.com/linuxtechi">Facebook</a>
+</blockquote>
+</div>
+</div> <div id="fb-root"></div>
+<script type="7fd558221e3ffe08bfb07328-text/javascript">(function(d, s, id) {
+					  var js, fjs = d.getElementsByTagName(s)[0];
+					  if (d.getElementById(id)) return;
+					  js = d.createElement(s); js.id = id;
+					  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+					  fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));</script></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer id="footer">
+<section class="container" id="footer-widgets">
+<div class="container-inner">
+<div class="pad group">
+<div class="footer-widget-1 grid one-third ">
+<div id="alxposts-5" class="widget widget_hu_posts">
+<h3 class="widget-title">Linux Desktop</h3>
+<ul class="alx-posts group ">
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/opensuse-leap-15-installation-guide-screenshots/" rel="bookmark" title="OpenSUSE Leap 15 installation guide with Screenshots">OpenSUSE Leap 15 installation guide with Screenshots</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/different-ways-access-google-drive-linux-desktop/" rel="bookmark" title="Different Ways to Access Google Drive on Linux Desktop">Different Ways to Access Google Drive on Linux Desktop</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/top10-things-after-installing-ubuntu-18-04/" rel="bookmark" title="Top 10 Things to do After Installing Ubuntu 18.04 LTS Desktop">Top 10 Things to do After Installing Ubuntu 18.04 LTS Desktop</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/ubuntu-18-04-lts-desktop-installation-guide-screenshots/" rel="bookmark" title="Ubuntu 18.04 LTS Desktop Installation Guide with Screenshots">Ubuntu 18.04 LTS Desktop Installation Guide with Screenshots</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/top-12-open-source-backup-tools-linux-systems/" rel="bookmark" title="Top 12 Open Source Backup Tools for Linux Systems">Top 12 Open Source Backup Tools for Linux Systems</a></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="footer-widget-2 grid one-third ">
+<div id="alxposts-3" class="widget widget_hu_posts">
+<h3 class="widget-title">Linux Commands</h3>
+<ul class="alx-posts group ">
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/git-command-practical-examples-linux-part-2/" rel="bookmark" title="Learn Git Command with Practical Examples on Linux &#8211; Part 2">Learn Git Command with Practical Examples on Linux &#8211; Part 2</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/learn-git-command-examples-linux-part-1/" rel="bookmark" title="Learn Git Command with Practical Examples on Linux &#8211; Part 1">Learn Git Command with Practical Examples on Linux &#8211; Part 1</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/10-tips-dmesg-command-linux-geeks/" rel="bookmark" title="10 tips about ‘dmesg’ command for Linux Geeks">10 tips about ‘dmesg’ command for Linux Geeks</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/9-useful-touch-command-examples-linux/" rel="bookmark" title="9 Useful touch command examples in Linux">9 Useful touch command examples in Linux</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/quick-tips-sudo-command-linux-systems/" rel="bookmark" title="10 Quick Tips About sudo command for Linux systems">10 Quick Tips About sudo command for Linux systems</a></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="footer-widget-3 grid one-third last">
+<div id="alxposts-4" class="widget widget_hu_posts">
+<h3 class="widget-title">Linux How To&#8217;s</h3>
+<ul class="alx-posts group ">
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/boot-ubuntu-18-04-debian-9-rescue-emergency-mode/" rel="bookmark" title="How to Boot Ubuntu 18.04 / Debian 9 Server in Rescue (Single User mode) / Emergency Mode">How to Boot Ubuntu 18.04 / Debian 9 Server in Rescue (Single User mode) / Emergency Mode</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/install-configure-nginx-ubuntu-18-04-debian-9/" rel="bookmark" title="How to Install and Configure Nginx &#8216;Web Server&#8217; on Ubuntu 18.04 / Debian 9">How to Install and Configure Nginx &#8216;Web Server&#8217; on Ubuntu 18.04 / Debian 9</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/capture-analyze-packets-tcpdump-command-linux/" rel="bookmark" title="How to capture and analyze packets with tcpdump command on Linux">How to capture and analyze packets with tcpdump command on Linux</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/install-use-openvswitch-kvm-centos-7-rhel-7/" rel="bookmark" title="How to Install and use Open vSwitch 2.9 with KVM on CentOS 7 / RHEL 7 Server">How to Install and use Open vSwitch 2.9 with KVM on CentOS 7 / RHEL 7 Server</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/install-apache-tomcat-9-ubuntu-18-04-16-04-server/" rel="bookmark" title="Easy Guide to Install Apache Tomcat 9 on Ubuntu 18.04 / 16.04 LTS Server">Easy Guide to Install Apache Tomcat 9 on Ubuntu 18.04 / 16.04 LTS Server</a></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="container" id="footer-bottom">
+<div class="container-inner">
+<a id="back-to-top" href="#"><i class="fas fa-angle-up"></i></a>
+<div class="pad group">
+<div class="grid one-half">
+<div id="copyright">
+<p><p></p><ul style="color:#7f777f"><li>Linuxtechi: Linux Tutorials &amp; Guides © 2018. All Rights Reserved.</li> <li><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://www.linuxtechi.com/wp-content/uploads/2016/02/common-creative-license-linuxtechi.png" /></a> This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</li> <li>Content of this site cannot be republished either online or offline without our permissions.</li></ul><p></p></p>
+</div>
+</div>
+<div class="grid one-half last">
+<ul class="social-links"><li><a rel="nofollow" class="social-tooltip" title="Follow us on Facebook" aria-label="Follow us on Facebook" href="http://www.facebook.com/linuxtechi" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-facebook"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Twitter" aria-label="Follow us on Twitter" href="http://www.twitter.com/linuxtechi" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-twitter"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Google-plus" aria-label="Follow us on Google-plus" href="https://plus.google.com/u/0/106374064320328901397/" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-google-plus"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Rss" aria-label="Follow us on Rss" href="https://www.linuxtechi.com/feed" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fas fa-rss"></i></a></li></ul> </div>
+</div>
+</div>
+</section>
+</footer>
+</div>
+<link rel='stylesheet' id='wp-subscribe-css' href='https://www.linuxtechi.com/wp-content/plugins/wp-subscribe/assets/css/wp-subscribe-form.css?ver=4.9.8' type='text/css' media='all' />
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/hueman-addons/addons/assets/front/js/jQuerySharrre.min.js?ver=4.9.8'></script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-includes/js/underscore.min.js?ver=1.8.3'></script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript">
+/* <![CDATA[ */
+var HUParams = {"_disabled":[],"SmoothScroll":{"Enabled":true,"Options":{"touchpadSupport":false}},"centerAllImg":"1","timerOnScrollAllBrowsers":"1","extLinksStyle":"","extLinksTargetExt":"","extLinksSkipSelectors":{"classes":["btn","button"],"ids":[]},"imgSmartLoadEnabled":"","imgSmartLoadOpts":{"parentSelectors":[".container .content",".container .sidebar","#footer","#header-widgets"],"opts":{"excludeImg":[".tc-holder-img"],"fadeIn_options":100}},"goldenRatio":"1.618","gridGoldenRatioLimit":"350","sbStickyUserSettings":{"desktop":true,"mobile":false},"isWPMobile":"","menuStickyUserSettings":{"desktop":"stick_up","mobile":"stick_up"},"isDevMode":"","ajaxUrl":"https:\/\/www.linuxtechi.com\/?huajax=1","frontNonce":{"id":"HuFrontNonce","handle":"c8d73e3eb7"},"userStarted":{"with":"with|3.3.7","on":{"date":"2017-05-20 12:23:49.000000","timezone_type":3,"timezone":"UTC"}},"isWelcomeNoteOn":"","welcomeContent":""};
+/* ]]> */
+</script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/js/scripts.min.js?ver=3.4.0'></script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-includes/js/comment-reply.min.js?ver=4.9.8'></script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-includes/js/wp-embed.min.js?ver=4.9.8'></script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript">
+/* <![CDATA[ */
+var wp_subscribe = {"ajaxurl":"https:\/\/www.linuxtechi.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/wp-subscribe/assets/js/wp-subscribe-form.js?ver=4.9.8'></script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript">
+/* <![CDATA[ */
+var cptch_vars = {"nonce":"d88e0444f4","ajaxurl":"https:\/\/www.linuxtechi.com\/wp-admin\/admin-ajax.php","enlarge":""};
+/* ]]> */
+</script>
+<script type="7fd558221e3ffe08bfb07328-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/captcha/js/front_end_script.js?ver=4.9.8'></script>
+<!--[if lt IE 9]>
+<script src="https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/js/ie/respond.js"></script>
+<![endif]-->
+<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/2448a7bd/cloudflare-static/rocket-loader.min.js" data-cf-nonce="7fd558221e3ffe08bfb07328-" defer=""></script></body>
+</html>
+
+
