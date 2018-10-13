@@ -42,7 +42,7 @@ echo 'network backup settings has done. /tempconfig'
 #se linux should be disabled
 echo '####################################'
 mv /etc/selinux/config  /etc/selinux/config.orig
-cp config /etc/selinux/
+cp seconfig /etc/selinux/
 echo 'se linux has been modified'
 echo 'Please reboot the system.'
 echo 'After rebooting. Execute Openstack setup 2'
