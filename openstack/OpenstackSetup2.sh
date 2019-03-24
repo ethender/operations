@@ -73,4 +73,5 @@ sudo $network-bridge >> 'ONBOOT=yes'
 cat $network-bridge >> LOG_FILE
 service network restart >> LOG_FILE
 
+echo "Note:  Log File:  /var/log/openstack_automate.log"
 echo "INSTALLATION HAS BEEN COMPLETED. Please check keystonerc_admin file in userdirectory " >> LOG_FILE

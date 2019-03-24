@@ -3,6 +3,7 @@
 <p>
 To  run this installation. Follow the instructions.<br>
   <ul>
+    <li>Note: <b>/var/log/openstack_automate.log</b> check this after installation completed or  error ocurred for information. </li>
     <li>All shell files change user to <b>ROOT</b>.  chown root:root *.sh</li>
     <li>All shell files should be <b>executables</b>. chmod 755 *.sh</li>
     <li>Make a note of network bridge. <b> EX: enp0s3</b>
