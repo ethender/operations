@@ -44,18 +44,18 @@ echo 'your network netmask ex- 255.255.255.0' >> $LOG_FILE
 read -p "Enter Netmask:" netmask
 echo 'your network gateway ex- 192.168.1.1' >> $LOG_FILE
 read -p "GATEWAY: "gateway
-sudo touch /etc/sysconfig/network-scripts/ifcfg-br-ex
+touch /etc/sysconfig/network-scripts/ifcfg-br-ex
 br-ex=/etc/sysconfig/network-scripts/ifcfg-br-ex
-sudo $br-ex >> 'DEVICE=br-ex'
-sudo $br-ex >> 'DEVICETYPE=ovs'
-sudo $br-ex >> 'TYPE=OVSBridge'
-sudo $br-ex >> 'IPADDR=$ip'
-sudo $br-ex >> 'NETMASK=$netmask'
-sudo $br-ex >> 'GATEWAY=$gateway'
-sudo $br-ex >> 'IPV4_FAILURE_FATAL=no'
-sudo $br-ex >> 'IPV6INIT=no'
-sudo $br-ex >> 'DNS1=8.8.8.8'
-sudo $br-ex >> 'ONBOOT=yes'
+$br-ex >> 'DEVICE=br-ex'
+$br-ex >> 'DEVICETYPE=ovs'
+$br-ex >> 'TYPE=OVSBridge'
+$br-ex >> 'IPADDR=$ip'
+$br-ex >> 'NETMASK=$netmask'
+$br-ex >> 'GATEWAY=$gateway'
+$br-ex >> 'IPV4_FAILURE_FATAL=no'
+$br-ex >> 'IPV6INIT=no'
+$br-ex >> 'DNS1=8.8.8.8'
+$br-ex >> 'ONBOOT=yes'
 
 echo "###############################################" >> $LOG_FILE
 echo 'Changed br-ex file'
@@ -64,12 +64,12 @@ cat $br-ex >> $LOG_FILE
 echo '###############################################' >> $LOG_FILE
 echo 'Changing bridge file' >> $LOG_FILE
 network-bridge=/etc/sysconfig/network-scripts/ifcfg-$bridge
-sudo $network-bridge > 'TYPE=OVSPort'
-sudo $network-bridge >> 'NAME=$bridge'
-sudo $network-bridge >> 'DEVICE=$bridge'
-sudo $network-bridge >> 'DEVICETYPE=ovs'
-sudo $network-bridge >> 'OVS_BRIDGE=br-ex'
-sudo $network-bridge >> 'ONBOOT=yes'
+ $network-bridge > 'TYPE=OVSPort'
+ $network-bridge >> 'NAME=$bridge'
+ $network-bridge >> 'DEVICE=$bridge'
+ $network-bridge >> 'DEVICETYPE=ovs'
+ $network-bridge >> 'OVS_BRIDGE=br-ex'
+ $network-bridge >> 'ONBOOT=yes'
 cat $network-bridge >> $LOG_FILE
 service network restart >> $LOG_FILE
 
